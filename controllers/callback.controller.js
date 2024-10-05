@@ -101,7 +101,7 @@ export const callbackController = async ({
     let sub1 = "";
     let finalLink = "";
 
-    if (data === "Neon54-DE") {
+    if (data === "HnS/Казино-DE") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
       subDE = "&sub_id4=DE";
@@ -109,7 +109,7 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    if (data === "SlotsPalace-DE") {
+    if (data === "Verde/Казино-DE") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
       subDE = "&sub_id4=DE";
@@ -125,7 +125,7 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    if (data === "VerdeCasino-DE") {
+    if (data === "Вакант") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
       subDE = "&sub_id4=DE";
@@ -141,7 +141,7 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    if (data === "BitCod-DE") {
+    if (data === "Вакант") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
       subDE = "&sub_id4=ES";
@@ -149,7 +149,7 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    if (data === "VegasPlus-ES") {
+    if (data === "Вакант") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
       subDE = "&sub_id4=ES";
@@ -157,7 +157,7 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    if (data === "UniqueCasino-ES") {
+    if (data === "Вакант") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
       subDE = "&sub_id4=ES";
@@ -165,7 +165,7 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    if (data === "MaChance-ES") {
+    if (data === "Вакант") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
       subDE = "&sub_id4=ES";
@@ -173,7 +173,7 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    if (data === "PlayRegal-ES") {
+    if (data === "Вакант") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
       subDE = "&sub_id4=ES";
