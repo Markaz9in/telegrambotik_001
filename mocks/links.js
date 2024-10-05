@@ -1,10 +1,10 @@
 export const links = [
   {
-    title: "Neon54-DE",
+    title: "HnS/Казино-DE",
     link: "https://weplaywithme.com/rDLTMR?",
   },
   {
-    title: "SlotsPalace-DE",
+    title: "Verde/Казино-DE",
     link: "https://weplaywithme.com/c8BvNh?",
   },
 
@@ -13,7 +13,7 @@ export const links = [
     link: "https://weplaywithme.com/QXkfnZ?",
   },
   {
-    title: "VerdeCasino-DE",
+    title: "Вакант",
     link: "https://weplaywithme.com/vh2xdT?",
   },
   {
@@ -21,23 +21,23 @@ export const links = [
     link: "https://uhfb362b70uh.ggljjk.cc/?target=-7EBNQCgQAAAdXMAIDmIwABQEBEREKEQkKEQ1CEQ0SAAF_YWRjb21ibwEx&subacc=1",
   },
   {
-    title: "BitCod-DE",
+    title: "Вакант",
     link: "https://weplaywithme.com/1wqJnF?",
   },
   {
-    title: "VegasPlus-ES",
+    title: "Вакант",
     link: "https://weplaywithme.com/gMghVP?",
   },
   {
-    title: "UniqueCasino-ES",
+    title: "Вакант",
     link: "https://weplaywithme.com/TJkvVh?",
   },
   {
-    title: "MaChance-ES",
+    title: "Вакант",
     link: "https://weplaywithme.com/sxhBy1?",
   },
   {
-    title: "PlayRegal-ES",
+    title: "Вакант",
     link: "https://weplaywithme.com/nrh9dg?",
   },
   
