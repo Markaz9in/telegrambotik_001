@@ -1,3 +1,3 @@
 export const users = [
-  { id: 466052008, name: "vitaliyCh" },
+  { id: 5211623595, name: "Partners_Group001" },
 ];
