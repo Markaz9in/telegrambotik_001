@@ -136,7 +136,7 @@ export const callbackController = async ({
     if (data === "QuantumAI-DE") {
       telegramIdQuery = `&custom2=${chatID}`;
       playerNameQuery = `&custom3=${currentInputValue}`;
-      subDE = `$custom4={click_id}&subpub={source_id}`;
+      subDE = "&custom4=DE";
       finalLink = `${links
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
