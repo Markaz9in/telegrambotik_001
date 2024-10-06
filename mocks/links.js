@@ -13,8 +13,8 @@ export const links = [
     link: "https://mentorhans001.us/QuantumAI?",
   },
   {
-    title: "Вакант",
-    link: "https://weplaywithme.com/vh2xdT?",
+    title: "QuantumAI2-DE",
+    link: "https://mentorhans001.us/QuantumAI2?",
   },
   {
     title: "BitcoinBank-DE",
