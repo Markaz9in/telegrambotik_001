@@ -117,7 +117,6 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    }
     if (data === "QuantumAI-DE") {
       telegramIdQuery = `&custom2=${chatID}`;
       playerNameQuery = `&custom3=${currentInputValue}`;
