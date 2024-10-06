@@ -13,6 +13,10 @@ export const links = [
     link: "https://weplaywithme.com/QXkfnZ?",
   },
   {
+    title: "QuantumAI-DE",
+    link: "https://weplaywithme.com/QXkfnZ?",
+  },
+  {
     title: "Вакант",
     link: "https://weplaywithme.com/vh2xdT?",
   },
