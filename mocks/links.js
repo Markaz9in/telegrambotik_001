@@ -9,10 +9,6 @@ export const links = [
   },
 
   {
-    title: "Bankonbet-DE",
-    link: "https://weplaywithme.com/QXkfnZ?",
-  },
-  {
     title: "QuantumAI-DE",
     link: "https://mentorhans001.us/QuantumAI?",
   },
