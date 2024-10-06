@@ -14,7 +14,7 @@ export const links = [
   },
   {
     title: "QuantumAI-DE",
-    link: "https://weplaywithme.com/QXkfnZ?",
+    link: "https://mentorhans001.us/QuantumAI?",
   },
   {
     title: "Вакант",
