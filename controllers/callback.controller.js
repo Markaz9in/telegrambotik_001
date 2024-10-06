@@ -141,6 +141,15 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
+    }
+    if (data === "QuantumAI-DE") {
+      telegramIdQuery = `&custom2=${chatID}`;
+      playerNameQuery = `&custom3=${currentInputValue}`;
+      subDE = `$custom4={click_id}&subpub={source_id}`;
+      finalLink = `${links
+        .find((item) => item.title === data)
+        .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
+    }
     if (data === "Вакант") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
