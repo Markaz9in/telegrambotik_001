@@ -1,11 +1,11 @@
 export const links = [
   {
     title: "HnS/Казино-DE",
-    link: "https://weplaywithme.com/rDLTMR?",
+    link: "https://mentorhans001.us/HnS?",
   },
   {
     title: "Verde/Казино-DE",
-    link: "https://weplaywithme.com/c8BvNh?",
+    link: "https://mentorhans001.us/Verde?",
   },
 
   {
