@@ -17,7 +17,7 @@ export const links = [
     link: "https://mentorhans001.us/QuantumAI2?",
   },
   {
-    title: "BitcoinBank-DE",
+    title: "Вакант",
     link: "https://uhfb362b70uh.ggljjk.cc/?target=-7EBNQCgQAAAdXMAIDmIwABQEBEREKEQkKEQ1CEQ0SAAF_YWRjb21ibwEx&subacc=1",
   },
   {
