@@ -117,23 +117,16 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    if (data === "Bankonbet-DE") {
-      telegramIdQuery = `&sub_id2=${chatID}`;
-      playerNameQuery = `&sub_id3=${currentInputValue}`;
-      subDE = "&sub_id4=DE";
-      finalLink = `${links
-        .find((item) => item.title === data)
-        .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
-    }
-    if (data === "Вакант") {
-      telegramIdQuery = `&sub_id2=${chatID}`;
-      playerNameQuery = `&sub_id3=${currentInputValue}`;
-      subDE = "&sub_id4=DE";
-      finalLink = `${links
-        .find((item) => item.title === data)
-        .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
     if (data === "QuantumAI-DE") {
+      telegramIdQuery = `&custom2=${chatID}`;
+      playerNameQuery = `&custom3=${currentInputValue}`;
+      subDE = "&custom4=DE";
+      finalLink = `${links
+        .find((item) => item.title === data)
+        .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
+    }
+    if (data === "QuantumAI2-DE") {
       telegramIdQuery = `&custom2=${chatID}`;
       playerNameQuery = `&custom3=${currentInputValue}`;
       subDE = "&custom4=DE";
@@ -144,7 +137,15 @@ export const callbackController = async ({
     if (data === "Вакант") {
       telegramIdQuery = `&sub_id2=${chatID}`;
       playerNameQuery = `&sub_id3=${currentInputValue}`;
-      subDE = "&sub_id4=ES";
+      subDE = "&sub_id4=DE";
+      finalLink = `${links
+        .find((item) => item.title === data)
+        .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
+    }
+    if (data === "Вакант") {
+      telegramIdQuery = `&custom2=${chatID}`;
+      playerNameQuery = `&custom3=${currentInputValue}`;
+      subDE = "&custom4=DE";
       finalLink = `${links
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
