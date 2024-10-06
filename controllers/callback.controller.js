@@ -133,15 +133,6 @@ export const callbackController = async ({
         .find((item) => item.title === data)
         .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
     }
-    if (data === "BitcoinBank-DE") {
-      telegramIdQuery = `&subacc2=${chatID}`;
-      playerNameQuery = `&subacc3=${currentInputValue}`;
-      subDE = `$subacc4={click_id}&subpub={source_id}`;
-      finalLink = `${links
-        .find((item) => item.title === data)
-        .link.toString()}${telegramIdQuery}${playerNameQuery}${subDE}`;
-    }
-    }
     if (data === "QuantumAI-DE") {
       telegramIdQuery = `&custom2=${chatID}`;
       playerNameQuery = `&custom3=${currentInputValue}`;
