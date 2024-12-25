@@ -44,10 +44,15 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
 
     console.log(`Короткая ссылка Bitly: ${bitlyShortLink}`);
 
-    // Отправка сообщений в Telegram с исходной ссылкой и короткими ссылками
-    await bot.sendMessage(chatID, `Исходная ссылка: ${finalLink}`);
-    await bot.sendMessage(chatID, `Короткая ссылка Cuttly: ${cuttlyShortLink}`);
-    await bot.sendMessage(chatID, `Короткая ссылка Bitly: ${bitlyShortLink}`);
+    // Формируем текст для одного сообщения
+    const message = `
+      Исходная ссылка: ${finalLink}
+      Короткая ссылка Cuttly: ${cuttlyShortLink}
+      Короткая ссылка Bitly: ${bitlyShortLink}
+    `;
+
+    // Отправляем все ссылки в одном сообщении
+    await bot.sendMessage(chatID, message.trim());
 
     return {
       cuttlyShortLink,
