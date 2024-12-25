@@ -21,6 +21,7 @@ export const generateFinalLink = ({ telegramIdQuery, playerNameQuery, data }) =>
 export const fetchLinksData = async ({ finalLink, chatID }) => {
   const cuttlyLink = generateCuttlyApiLink(finalLink);
   try {
+    console.log(`Запрос к Cuttly: ${cuttlyLink}`);
     // Получаем короткую ссылку с Cuttly
     const {
       data: {
@@ -33,9 +34,16 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
       throw new Error("Cuttly API did not return a short link.");
     }
 
+    console.log(`Короткая ссылка Cuttly: ${cuttlyShortLink}`);
+
     // Запрос к публичному API TinyURL для сокращения ссылки
     const tinyUrlApiUrl = `https://api.tinyurl.com/create?url=${encodeURIComponent(cuttlyShortLink)}`;
+    console.log(`Запрос к TinyURL: ${tinyUrlApiUrl}`);
+
     const response = await axios.get(tinyUrlApiUrl);
+
+    // Логируем ответ от TinyURL
+    console.log('Ответ от TinyURL:', response.data);
 
     // Проверка, если TinyURL вернул пустой ответ
     if (!response.data) {
@@ -51,8 +59,12 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
       finalLink,
     };
   } catch (e) {
-    console.error('Error during link shortening:', e.message); // Логирование ошибки с сообщением
+    console.error('Ошибка при сокращении ссылки:', e.message); // Логируем ошибку с подробностями
+    console.error('Stack trace:', e.stack); // Логируем стек ошибки для диагностики
+
+    // Отправляем сообщение в чат с ошибкой
     await bot.sendMessage(chatID, "Попробуйте позже");
+
     return {
       cuttlyShortLink: "",
       tinyUrlShortLink: "",
