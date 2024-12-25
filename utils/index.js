@@ -10,6 +10,7 @@ export const generateCuttlyApiLink = (finalLink) => {
 };
 
 export const generateFinalLink = ({ telegramIdQuery, playerNameQuery, data }) => {
+  // Возвращаем полную ссылку, добавляя параметры
   return `${links.find((item) => item.title === data).link}${telegramIdQuery}${playerNameQuery}`;
 };
 
@@ -43,7 +44,8 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
 
     console.log(`Короткая ссылка Bitly: ${bitlyShortLink}`);
 
-    // Отправка сообщений в Telegram
+    // Отправка сообщений в Telegram с исходной ссылкой и короткими ссылками
+    await bot.sendMessage(chatID, `Исходная ссылка: ${finalLink}`);
     await bot.sendMessage(chatID, `Короткая ссылка Cuttly: ${cuttlyShortLink}`);
     await bot.sendMessage(chatID, `Короткая ссылка Bitly: ${bitlyShortLink}`);
 
