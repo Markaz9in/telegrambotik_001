@@ -17,7 +17,7 @@ export const generateFinalLink = ({ telegramIdQuery, playerNameQuery, data }) =>
 export const fetchLinksData = async ({ finalLink, chatID }) => {
     const cuttlyLink = generateCuttlyApiLink(finalLink);
     try {
-        // Запрос к Cuttly
+        // 1. Запрос к Cuttly
         console.log(`Запрос к Cuttly: ${cuttlyLink}`);
         const {
             data: {
@@ -27,11 +27,11 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
 
         console.log(`Короткая ссылка Cuttly: ${cuttlyShortLink}`);
 
-        // Преобразование для формата MentorHans
+        // 2. Преобразование для формата MentorHans
         const mentorHansLink = `https://mentorhans.ru?url=${encodeURIComponent(cuttlyShortLink)}`;
         console.log(`Ссылка MentorHans: ${mentorHansLink}`);
 
-        // Запрос к Bitly для сокращения ссылки MentorHans
+        // 3. Запрос к Bitly для сокращения ссылки MentorHans
         const {
             data: { link: bitlyShortLink },
         } = await axios.post(
@@ -46,11 +46,17 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
 
         console.log(`Короткая ссылка Bitly: ${bitlyShortLink}`);
 
-        // Отправка сообщений в Telegram
-        await bot.sendMessage(chatID, `Исходная ссылка: ${finalLink}`);
-        await bot.sendMessage(chatID, `Короткая ссылка Cuttly: ${cuttlyShortLink}`);
-        await bot.sendMessage(chatID, `Ссылка MentorHans: ${mentorHansLink}`);
-        await bot.sendMessage(chatID, `Короткая ссылка Bitly: ${bitlyShortLink}`);
+        // 4. Красивое финальное сообщение
+        const message = `
+<b>Готово! 🎉</b>\n
+Исходная ссылка: <a href="${finalLink}">${finalLink}</a>\n
+Короткая ссылка Cuttly: <a href="${cuttlyShortLink}">${cuttlyShortLink}</a>\n
+Ссылка MentorHans: <a href="${mentorHansLink}">${mentorHansLink}</a>\n
+Короткая ссылка Bitly: <a href="${bitlyShortLink}">${bitlyShortLink}</a>
+`;
+
+        // Отправка сообщения в Telegram
+        await bot.sendMessage(chatID, message, { parse_mode: 'HTML' });
 
         return {
             cuttlyShortLink,
@@ -60,7 +66,10 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
         };
     } catch (e) {
         console.error('Ошибка при сокращении ссылки:', e);
-        await bot.sendMessage(chatID, 'Попробуйте позже');
+
+        // Отправляем сообщение об ошибке
+        await bot.sendMessage(chatID, '⚠️ Ошибка! Попробуйте позже.', { parse_mode: 'HTML' });
+
         return {
             cuttlyShortLink: '',
             mentorHansLink: '',
