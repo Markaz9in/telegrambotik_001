@@ -4,11 +4,7 @@ import { bot } from "../src/app.js";
 
 // Переменные окружения (от Heroku)
 const CUTTLY_API_KEY = process.env.CUTTLY_API_KEY;
-const TINYURL_API_KEY = process.env.TINYURL_API_KEY; // Мы его используем, если потребуется для авторизации
-
-if (!CUTTLY_API_KEY) {
-  console.error("CUTTLY_API_KEY is not defined in the environment variables.");
-}
+const BITLY_API_KEY = process.env.BITLY_API_KEY; // Новый API ключ для Bitly
 
 export const generateCuttlyApiLink = (finalLink) => {
   return `http://cutt.ly/api/api.php?key=${CUTTLY_API_KEY}&short=${encodeURIComponent(finalLink)}`;
@@ -29,45 +25,44 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
       },
     } = await axios.get(cuttlyLink);
 
-    // Проверка, если Cuttly не вернул короткую ссылку
     if (!cuttlyShortLink) {
       throw new Error("Cuttly API did not return a short link.");
     }
 
     console.log(`Короткая ссылка Cuttly: ${cuttlyShortLink}`);
 
-    // Запрос к публичному API TinyURL для сокращения ссылки
-    const tinyUrlApiUrl = `https://api.tinyurl.com/create?url=${encodeURIComponent(cuttlyShortLink)}`;
-    console.log(`Запрос к TinyURL: ${tinyUrlApiUrl}`);
+    // Создаем запрос к Bitly для сокращения ссылки
+    const bitlyApiUrl = `https://api-ssl.bitly.com/v4/shorten`;
+    const headers = {
+      "Authorization": `Bearer ${BITLY_API_KEY}`,
+      "Content-Type": "application/json",
+    };
+    const body = {
+      long_url: cuttlyShortLink,
+    };
 
-    const response = await axios.get(tinyUrlApiUrl);
+    // Отправляем запрос к Bitly
+    const response = await axios.post(bitlyApiUrl, body, { headers });
 
-    // Логируем ответ от TinyURL
-    console.log('Ответ от TinyURL:', response.data);
+    console.log('Ответ от Bitly:', response.data);
 
-    // Проверка, если TinyURL вернул пустой ответ
-    if (!response.data) {
-      throw new Error("TinyURL API did not return a valid response.");
-    }
-
-    // Ответ от TinyURL
-    const tinyUrlShortLink = response.data;
+    // Получаем короткую ссылку от Bitly
+    const bitlyShortLink = response.data.link;
 
     return {
       cuttlyShortLink,
-      tinyUrlShortLink,
+      bitlyShortLink,
       finalLink,
     };
   } catch (e) {
-    console.error('Ошибка при сокращении ссылки:', e.message); // Логируем ошибку с подробностями
-    console.error('Stack trace:', e.stack); // Логируем стек ошибки для диагностики
+    console.error('Ошибка при сокращении ссылки:', e.message); 
+    console.error('Stack trace:', e.stack);
 
-    // Отправляем сообщение в чат с ошибкой
     await bot.sendMessage(chatID, "Попробуйте позже");
 
     return {
       cuttlyShortLink: "",
-      tinyUrlShortLink: "",
+      bitlyShortLink: "",
       finalLink: "",
     };
   }
