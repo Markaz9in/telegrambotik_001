@@ -5,22 +5,47 @@ import { bot } from "../src/app.js";
 const CUTTLY_API_KEY = process.env.CUTTLY_API_KEY;
 const BITLY_API_KEY = process.env.BITLY_API_KEY;
 
+/**
+ * Генерация ссылки для Cuttly API
+ * @param {string} finalLink - Исходная ссылка для сокращения
+ * @returns {string} - Ссылка для API Cuttly
+ */
 export const generateCuttlyApiLink = (finalLink) => {
   return `http://cutt.ly/api/api.php?key=${CUTTLY_API_KEY}&short=${encodeURIComponent(finalLink)}`;
 };
 
+/**
+ * Генерация финальной ссылки с параметрами
+ * @param {Object} params - Параметры для генерации ссылки
+ * @param {string} params.telegramIdQuery - Параметр Telegram ID
+ * @param {string} params.playerNameQuery - Параметр имени игрока
+ * @param {string} params.data - Название данных для поиска в links
+ * @returns {string} - Полная ссылка
+ */
 export const generateFinalLink = ({ telegramIdQuery, playerNameQuery, data }) => {
-  // Формируем полную ссылку, добавляя параметры
-  const finalLink = `${links.find((item) => item.title === data).link}${telegramIdQuery}${playerNameQuery}`;
+  // Находим элемент в массиве links
+  const linkItem = links.find((item) => item.title === data);
 
-  // Генерируем ссылку на страницу с кнопкой, передавая исходную ссылку как параметр
-  const redirectPageLink = `https://yourdomain.com/redirect-page.html?link=${encodeURIComponent(finalLink)}`;
-  
-  return redirectPageLink;  // Возвращаем ссылку на страницу с кнопкой
+  // Если элемент не найден, выбрасываем ошибку или возвращаем дефолтную ссылку
+  if (!linkItem) {
+    throw new Error(`Не найдена ссылка для title: ${data}`);
+  }
+
+  // Возвращаем полную ссылку, добавляя параметры
+  const finalLink = `${linkItem.link}${telegramIdQuery}${playerNameQuery}`;
+  return finalLink;
 };
 
+/**
+ * Получение данных сокращенных ссылок с помощью Cuttly и Bitly
+ * @param {Object} params - Параметры для запроса
+ * @param {string} params.finalLink - Исходная ссылка
+ * @param {string} params.chatID - ID чата для отправки сообщения
+ * @returns {Object} - Объект с результатами
+ */
 export const fetchLinksData = async ({ finalLink, chatID }) => {
   const cuttlyLink = generateCuttlyApiLink(finalLink);
+
   try {
     // Запрос к Cuttly
     console.log(`Запрос к Cuttly: ${cuttlyLink}`);
@@ -29,7 +54,7 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
         url: { shortLink: cuttlyShortLink },
       },
     } = await axios.get(cuttlyLink);
-    
+
     console.log(`Короткая ссылка Cuttly: ${cuttlyShortLink}`);
 
     // Запрос к Bitly
@@ -49,15 +74,11 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
 
     console.log(`Короткая ссылка Bitly: ${bitlyShortLink}`);
 
-    // Генерация ссылки на HTML страницу с кнопкой
-    const htmlPageLink = generateFinalLink({ finalLink: cuttlyShortLink, chatID, data: 'exampleData' });
-
     // Формируем текст для одного сообщения
     const message = `
       Исходная ссылка: ${finalLink}
       Короткая ссылка Cuttly: ${cuttlyShortLink}
       Короткая ссылка Bitly: ${bitlyShortLink}
-      Перейдите по ссылке для активации алгоритма: ${htmlPageLink}
     `;
 
     // Отправляем все ссылки в одном сообщении
