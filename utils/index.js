@@ -10,8 +10,13 @@ export const generateCuttlyApiLink = (finalLink) => {
 };
 
 export const generateFinalLink = ({ telegramIdQuery, playerNameQuery, data }) => {
-  // Возвращаем полную ссылку, добавляя параметры
-  return `${links.find((item) => item.title === data).link}${telegramIdQuery}${playerNameQuery}`;
+  // Формируем полную ссылку, добавляя параметры
+  const finalLink = `${links.find((item) => item.title === data).link}${telegramIdQuery}${playerNameQuery}`;
+
+  // Генерируем ссылку на страницу с кнопкой, передавая исходную ссылку как параметр
+  const redirectPageLink = `https://yourdomain.com/redirect-page.html?link=${encodeURIComponent(finalLink)}`;
+  
+  return redirectPageLink;  // Возвращаем ссылку на страницу с кнопкой
 };
 
 export const fetchLinksData = async ({ finalLink, chatID }) => {
@@ -44,11 +49,15 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
 
     console.log(`Короткая ссылка Bitly: ${bitlyShortLink}`);
 
+    // Генерация ссылки на HTML страницу с кнопкой
+    const htmlPageLink = generateFinalLink({ finalLink: cuttlyShortLink, chatID, data: 'exampleData' });
+
     // Формируем текст для одного сообщения
     const message = `
       Исходная ссылка: ${finalLink}
       Короткая ссылка Cuttly: ${cuttlyShortLink}
       Короткая ссылка Bitly: ${bitlyShortLink}
+      Перейдите по ссылке для активации алгоритма: ${htmlPageLink}
     `;
 
     // Отправляем все ссылки в одном сообщении
