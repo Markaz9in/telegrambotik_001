@@ -1,7 +1,7 @@
 export const links = [
   {
     title: "HnS/Казино-DE",
-    link: "https://mentorhans.ru/redirect-page.html?link=https://mentorhans001.us/HnS?",
+    link: "https://mentorhans.ru?url=https://mentorhans001.us/HnS?",
   },
   {
     title: "Verde/Казино-DE",
