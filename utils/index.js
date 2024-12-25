@@ -2,8 +2,13 @@ import { links } from "../mocks/links.js";
 import axios from "axios";
 import { bot } from "../src/app.js";
 
+// Переменные окружения (от Heroku)
 const CUTTLY_API_KEY = process.env.CUTTLY_API_KEY;
-const TINYURL_API_KEY = process.env.TINYURL_API_KEY;
+const TINYURL_API_KEY = process.env.TINYURL_API_KEY; // Мы его используем, если потребуется для авторизации
+
+if (!CUTTLY_API_KEY) {
+  console.error("CUTTLY_API_KEY is not defined in the environment variables.");
+}
 
 export const generateCuttlyApiLink = (finalLink) => {
   return `http://cutt.ly/api/api.php?key=${CUTTLY_API_KEY}&short=${encodeURIComponent(finalLink)}`;
@@ -23,21 +28,22 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
       },
     } = await axios.get(cuttlyLink);
 
-    // Запрос к TinyURL API для сокращения ссылки
-    const tinyUrlApiUrl = 'https://api.tinyurl.com/create';
-    const response = await axios.post(
-      tinyUrlApiUrl,
-      { url: cuttlyShortLink },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${TINYURL_API_KEY}`,
-        },
-      }
-    );
+    // Проверка, если Cuttly не вернул короткую ссылку
+    if (!cuttlyShortLink) {
+      throw new Error("Cuttly API did not return a short link.");
+    }
 
-    // Ожидаем, что в ответе будет поле 'data' с сокращённой ссылкой
-    const tinyUrlShortLink = response.data.data.tiny_url;
+    // Запрос к публичному API TinyURL для сокращения ссылки
+    const tinyUrlApiUrl = `https://api.tinyurl.com/create?url=${encodeURIComponent(cuttlyShortLink)}`;
+    const response = await axios.get(tinyUrlApiUrl);
+
+    // Проверка, если TinyURL вернул пустой ответ
+    if (!response.data) {
+      throw new Error("TinyURL API did not return a valid response.");
+    }
+
+    // Ответ от TinyURL
+    const tinyUrlShortLink = response.data;
 
     return {
       cuttlyShortLink,
@@ -45,7 +51,7 @@ export const fetchLinksData = async ({ finalLink, chatID }) => {
       finalLink,
     };
   } catch (e) {
-    console.error('Error during link shortening:', e); // Логирование ошибки
+    console.error('Error during link shortening:', e.message); // Логирование ошибки с сообщением
     await bot.sendMessage(chatID, "Попробуйте позже");
     return {
       cuttlyShortLink: "",
