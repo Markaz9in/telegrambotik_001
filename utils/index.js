@@ -2,7 +2,7 @@ import { links } from "../mocks/links.js";
 import axios from "axios";
 import { bot } from "../src/app.js";
 
-const TAPNI_API_KEY = process.env.TAPNI_API_KEY;
+const BITLY_API_KEY = process.env.BITLY_API_KEY;
 const CUTTLY_API_KEY = process.env.CUTTLY_API_KEY;
 
 export const generateCuttlyApiLink = (finalLink) => {
@@ -21,40 +21,52 @@ export const generateFinalLink = ({
   }${telegramIdQuery}${playerNameQuery}`;
 };
 
+// New function for Bitly API
+export const generateBitlyLink = async (longUrl) => {
+  try {
+    const response = await axios.post(
+      "https://api-ssl.bitly.com/v4/shorten",
+      {
+        long_url: longUrl,
+        domain: "bit.ly",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${BITLY_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data.link; // Returns the shortened link
+  } catch (error) {
+    console.error("Error with Bitly API:", error.message);
+    throw new Error("Failed to generate Bitly link");
+  }
+};
+
 export const fetchLinksData = async ({ finalLink, chatID }) => {
   const cuttlyLink = generateCuttlyApiLink(finalLink);
   try {
+    // Get Cuttly short link
     const {
       data: {
         url: { shortLink: cuttlyShortLink },
       },
     } = await axios.get(cuttlyLink);
-    const {
-      data: { shorturl: tapniShortLink },
-    } = await axios.post(
-      "http://tapny.ru/api/url/add",
-      {
-        url: cuttlyShortLink,
-        domain: "https://playswithme.com",
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${TAPNI_API_KEY}`,
-        },
-      }
-    );
+
+    // Generate Bitly short link
+    const bitlyShortLink = await generateBitlyLink(cuttlyShortLink);
 
     return {
       cuttlyShortLink,
-      tapniShortLink,
+      bitlyShortLink,
       finalLink,
     };
   } catch (e) {
     await bot.sendMessage(chatID, "Попробуйте позже");
     return {
       cuttlyShortLink: "",
-      tapniShortLink: "",
+      bitlyShortLink: "",
       finalLink: "",
     };
   }
